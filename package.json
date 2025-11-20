@@ -1,6 +1,6 @@
 {
-  "name": "fhevm-hardhat-template",
-  "description": "Hardhat-based template for developing FHEVM Solidity smart contracts",
+  "name": "artifact-cipher-vault",
+  "description": "Encrypted Artifact Transfer Approval Voting System using FHEVM",
   "version": "0.1.0",
   "engines": {
     "node": ">=20",
@@ -54,7 +54,7 @@
     "mocha": "^11.7.1",
     "prettier": "^3.6.2",
     "prettier-plugin-solidity": "^2.1.0",
-    "rimraf": "^6.0.1",
+    "rimraf": "^5.0.10",
     "solhint": "^6.0.0",
     "solidity-coverage": "^0.8.16",
     "ts-generator": "^0.1.1",
@@ -96,6 +96,7 @@
     "axios@>=1.0.0 <1.8.2": ">=1.8.2",
     "axios@<0.29.1": ">=0.29.1",
     "cookie@<0.7.0": ">=0.7.0",
-    "minimatch": "^3.1.2"
+    "minimatch@<4.0.0": "^3.1.2",
+    "minimatch@>=4.0.0 <5.0.0": "^4.2.1"
   }
 }
