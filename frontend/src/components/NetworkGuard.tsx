@@ -58,7 +58,7 @@ export function NetworkGuard({ children }: NetworkGuardProps) {
             <div key={index} className="info-box">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
-                <p className="text-gray-700 text-sm font-medium">{issue}</p>
+                <p className="text-gray-900 text-sm font-medium">{issue}</p>
               </div>
             </div>
           ))}
@@ -93,7 +93,7 @@ export function NetworkGuard({ children }: NetworkGuardProps) {
               <p className="text-gray-700 text-sm">
                 <strong className="text-yellow-700">Wallet Connection Required:</strong>
                 <br />
-                <span style={{ color: 'rgba(0, 0, 0, 0.7)' }}>Please connect your MetaMask wallet to continue using the Artifact Cipher Vault.</span>
+                <span style={{ color: 'rgba(0, 0, 0, 0.9)' }}>Please connect your MetaMask wallet to continue using the Artifact Cipher Vault.</span>
               </p>
             </div>
           )}
