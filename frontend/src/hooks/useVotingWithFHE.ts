@@ -90,7 +90,7 @@ export function useVotingWithFHE() {
       const provider = new ethers.BrowserProvider(window.ethereum!);
       const contract = new ethers.Contract(
         getContractAddress(31337),
-        artifactVoting.interface || artifactVoting.abi,
+        artifactVoting.abi,
         provider
       );
 
