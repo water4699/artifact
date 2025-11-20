@@ -55,17 +55,17 @@ export function AdminDecryptResults({ requestId, onBack }: AdminDecryptResultsPr
         let description = requestData[2] || '';
 
         // Try to decrypt encrypted data
-        if (requestData[10] && requestData[10].length > 0) {
+        if (requestData[3] && requestData[3].length > 0) {
           try {
-            artifactName = decryptBytes(requestData[10]);
+            artifactName = decryptBytes(requestData[3]);
           } catch {
             console.log('Could not decrypt artifact name, using available data');
           }
         }
 
-        if (requestData[11] && requestData[11].length > 0) {
+        if (requestData[4] && requestData[4].length > 0) {
           try {
-            description = decryptBytes(requestData[11]);
+            description = decryptBytes(requestData[4]);
           } catch {
             console.log('Could not decrypt description, using available data');
           }

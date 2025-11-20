@@ -64,17 +64,17 @@ export function VoteOnRequest({ requestId, onBack }: VoteOnRequestProps) {
         let description = requestData[2] || '';
 
         // Try to decrypt encrypted data
-        if (requestData[10] && requestData[10].length > 0) {
+        if (requestData[3] && requestData[3].length > 0) {
           try {
-            artifactName = decryptBytes(requestData[10]);
+            artifactName = decryptBytes(requestData[3]);
           } catch {
             console.log('Could not decrypt artifact name, using available data');
           }
         }
 
-        if (requestData[11] && requestData[11].length > 0) {
+        if (requestData[4] && requestData[4].length > 0) {
           try {
-            description = decryptBytes(requestData[11]);
+            description = decryptBytes(requestData[4]);
           } catch {
             console.log('Could not decrypt description, using available data');
           }
@@ -84,13 +84,13 @@ export function VoteOnRequest({ requestId, onBack }: VoteOnRequestProps) {
           id: requestData[0],
           artifactName: artifactName,
           description: description,
-          requester: requestData[3],
-          createdAt: requestData[4],
-          active: requestData[5],
-          decrypted: requestData[6],
-          finalYesCount: BigInt(requestData[7]),
-          finalNoCount: BigInt(requestData[8]),
-          approved: requestData[9],
+          requester: requestData[5],
+          createdAt: requestData[6],
+          active: requestData[7],
+          decrypted: requestData[8],
+          finalYesCount: BigInt(requestData[9]),
+          finalNoCount: BigInt(requestData[10]),
+          approved: requestData[11],
         };
         setRequestDetails(request);
       } catch (error) {

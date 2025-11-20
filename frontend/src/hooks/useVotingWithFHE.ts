@@ -102,8 +102,8 @@ export function useVotingWithFHE() {
       }
 
       // Extract vote counts - requestData is an array
-      const finalYesCount = Number(requestData[7]); // finalYesCount
-      const finalNoCount = Number(requestData[8]); // finalNoCount
+      const finalYesCount = Number(requestData[9]); // finalYesCount
+      const finalNoCount = Number(requestData[10]); // finalNoCount
 
       console.log('Decrypted vote counts for request', requestId, ':', { finalYesCount, finalNoCount });
 
