@@ -4,10 +4,10 @@ import * as path from "path";
 
 const CONTRACT_NAME = "EncryptedArtifactVoting";
 
-// <root>/artifact-cipher (parent directory)
+// <root>/packages/fhevm-hardhat-template
 const rel = "..";
 
-// <root>/artifact-cipher/frontend/abi
+// <root>/packages/site/components
 const outdir = path.resolve("./abi");
 
 if (!fs.existsSync(outdir)) {
@@ -22,7 +22,7 @@ const line =
 
 if (!fs.existsSync(dir)) {
   console.error(
-    `${line}Unable to locate ${rel}. Expecting artifact-cipher root directory${line}`
+    `${line}Unable to locate ${rel}. Expecting <root>/packages/${dirname}${line}`
   );
   process.exit(1);
 }
@@ -46,9 +46,10 @@ function deployOnHardhatNode() {
     return;
   }
   try {
-    // Skip hardhat node deployment during build - use existing deployments
-    console.log("Skipping Hardhat node deployment during build process...");
-    return;
+    execSync(`./deploy-hardhat-node.sh`, {
+      cwd: path.resolve("./scripts"),
+      stdio: "inherit",
+    });
   } catch (e) {
     console.error(`${line}Script execution failed: ${e}${line}`);
     process.exit(1);
@@ -84,8 +85,13 @@ function readDeployment(chainName, chainId, contractName, optional) {
   return obj;
 }
 
-// Auto deployed on Linux/Mac (will fail on windows)
-let deployLocalhost = readDeployment("localhost", 31337, CONTRACT_NAME, true /* optional for build */);
+// Try to read deployments, but use fallback if not found (for build process)
+let deployLocalhost;
+try {
+  deployLocalhost = readDeployment("localhost", 31337, CONTRACT_NAME, true /* optional for build */);
+} catch (e) {
+  console.log("Deployments not found, using fallback ABI for build process...");
+}
 
 // Provide fallback ABI if deployments not found (for build process)
 if (!deployLocalhost) {
@@ -129,10 +135,15 @@ if (!deployLocalhost) {
   };
 }
 
-// Sepolia is optional
-let deploySepolia = readDeployment("sepolia", 11155111, CONTRACT_NAME, true /* optional */);
+// Sepolia is optional - try to read, fallback if not found
+let deploySepolia;
+try {
+  deploySepolia = readDeployment("sepolia", 11155111, CONTRACT_NAME, true /* optional */);
+} catch (e) {
+  console.log("Sepolia deployment not found, using fallback...");
+}
 if (!deploySepolia) {
-  deploySepolia = { abi: deployLocalhost.abi, address: "0x0000000000000000000000000000000000000000", chainId: 11155111 };
+  deploySepolia = { abi: deployLocalhost.abi, address: "0x0000000000000000000000000000000000000000" };
 }
 
 // Temporarily skip ABI compatibility check for development
