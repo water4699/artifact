@@ -3,6 +3,7 @@ import { useAccount, usePublicClient, useChainId } from 'wagmi';
 import { useFhevm } from '../../fhevm/useFhevm';
 import { useArtifactVoting } from './useArtifactVoting';
 import { getContractAddress } from '../config/contracts';
+import { EncryptedArtifactVoting__factory } from '../../../types';
 
 // FHEVM type constants (kept for future use)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -90,7 +91,7 @@ export function useVotingWithFHE() {
       const provider = new ethers.BrowserProvider(window.ethereum!);
       const contract = new ethers.Contract(
         getContractAddress(31337),
-        artifactVoting.abi,
+        EncryptedArtifactVoting__factory.abi,
         provider
       );
 
