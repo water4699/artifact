@@ -46,10 +46,9 @@ function deployOnHardhatNode() {
     return;
   }
   try {
-    execSync(`./deploy-hardhat-node.sh`, {
-      cwd: path.resolve("./scripts"),
-      stdio: "inherit",
-    });
+    // Skip hardhat node deployment during build - use existing deployments
+    console.log("Skipping Hardhat node deployment during build process...");
+    return;
   } catch (e) {
     console.error(`${line}Script execution failed: ${e}${line}`);
     process.exit(1);
