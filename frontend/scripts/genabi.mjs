@@ -85,12 +85,54 @@ function readDeployment(chainName, chainId, contractName, optional) {
 }
 
 // Auto deployed on Linux/Mac (will fail on windows)
-const deployLocalhost = readDeployment("localhost", 31337, CONTRACT_NAME, false /* optional */);
+let deployLocalhost = readDeployment("localhost", 31337, CONTRACT_NAME, true /* optional for build */);
+
+// Provide fallback ABI if deployments not found (for build process)
+if (!deployLocalhost) {
+  console.log("Using fallback ABI for build process...");
+  deployLocalhost = {
+    abi: [
+      {
+        "inputs": [
+          {"internalType": "bytes", "name": "encryptedArtifactName", "type": "bytes"},
+          {"internalType": "bytes", "name": "encryptedDescription", "type": "bytes"},
+          {"internalType": "address[]", "name": "authorizedVoters", "type": "address[]"}
+        ],
+        "name": "createTransferRequest",
+        "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [{"internalType": "uint256", "name": "requestId", "type": "uint256"}],
+        "name": "getTransferRequest",
+        "outputs": [
+          {"internalType": "uint256", "name": "id", "type": "uint256"},
+          {"internalType": "address", "name": "requester", "type": "address"},
+          {"internalType": "string", "name": "artifactName", "type": "string"},
+          {"internalType": "string", "name": "description", "type": "string"},
+          {"internalType": "uint256", "name": "createdAt", "type": "uint256"},
+          {"internalType": "bool", "name": "active", "type": "bool"},
+          {"internalType": "bool", "name": "decrypted", "type": "bool"},
+          {"internalType": "bool", "name": "approved", "type": "bool"},
+          {"internalType": "uint32", "name": "finalYesCount", "type": "uint32"},
+          {"internalType": "uint32", "name": "finalNoCount", "type": "uint32"},
+          {"internalType": "bytes", "name": "encryptedArtifactName", "type": "bytes"},
+          {"internalType": "bytes", "name": "encryptedDescription", "type": "bytes"}
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    chainId: 31337
+  };
+}
 
 // Sepolia is optional
 let deploySepolia = readDeployment("sepolia", 11155111, CONTRACT_NAME, true /* optional */);
 if (!deploySepolia) {
-  deploySepolia= { abi: deployLocalhost.abi, address: "0x0000000000000000000000000000000000000000" };
+  deploySepolia = { abi: deployLocalhost.abi, address: "0x0000000000000000000000000000000000000000", chainId: 11155111 };
 }
 
 // Temporarily skip ABI compatibility check for development
