@@ -15,7 +15,7 @@
     "dev-webpack": "npm run clean && npm run genabi && next dev",
     "genabi": "node ./scripts/genabi.mjs",
     "ishhrunning": "node ./scripts/is-hardhat-node-running.mjs",
-    "build": "next build",
+    "build": "npm run genabi && cd .. && npm run typechain && cd frontend && next build",
     "start": "next start",
     "lint": "next lint"
   },
