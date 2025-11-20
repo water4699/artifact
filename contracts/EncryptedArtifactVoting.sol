@@ -40,6 +40,7 @@ contract EncryptedArtifactVoting is SepoliaConfig {
     // Voter permissions per request
     mapping(uint256 => mapping(address => bool)) private _authorizedVoters;
     mapping(uint256 => mapping(address => bool)) private _hasVoted;
+    mapping(uint256 => uint256) private _authorizedVoterCount;
 
     // ============ Events ============
 
@@ -114,6 +115,7 @@ contract EncryptedArtifactVoting is SepoliaConfig {
             _authorizedVoters[requestId][authorizedVoters[i]] = true;
             emit VoterAuthorized(requestId, authorizedVoters[i]);
         }
+        _authorizedVoterCount[requestId] = authorizedVoters.length;
 
         _requestIds.push(requestId);
 
@@ -277,7 +279,6 @@ contract EncryptedArtifactVoting is SepoliaConfig {
 
     /// @notice Get the count of authorized voters for a request
     function getAuthorizedVoterCount(uint256 requestId) external view returns (uint256) {
-        // This is a simplified count - in production you might want to maintain a counter
-        return _requestIds.length > 0 ? 1 : 0; // Placeholder implementation
+        return _authorizedVoterCount[requestId];
     }
 }
