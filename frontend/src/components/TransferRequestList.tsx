@@ -65,7 +65,6 @@ export function TransferRequestList({ onVoteRequest, onDecryptRequest, refreshTr
           return;
         }
       }
-      }
 
       // If still no requestIds, try manual call
       if (!requestIds || requestIds.length === 0) {
