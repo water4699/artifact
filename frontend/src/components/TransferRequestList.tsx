@@ -22,7 +22,7 @@ export function TransferRequestList({ onVoteRequest, onDecryptRequest, refreshTr
   const contractAddress = getContractAddress(chainId || 31337);
 
   // Use useReadContract directly to get all request IDs
-  const { data: allRequestIds, refetch, isLoading, contractError } = useReadContract({
+  const { data: allRequestIds, refetch } = useReadContract({
     address: contractAddress as `0x${string}`,
     abi: EncryptedArtifactVoting__factory.abi,
     functionName: 'getAllRequestIds',

@@ -6,7 +6,7 @@ import { TransferRequest } from '../hooks/useArtifactVoting';
 import { useArtifactVoting } from '../hooks/useArtifactVoting';
 import { EncryptedArtifactVoting__factory } from '../../../types';
 import { getContractAddress } from '../config/contracts';
-import { ethers } from 'ethers';
+// import { ethers } from 'ethers'; // Not used in this component
 
 interface AdminDecryptResultsProps {
   requestId: number;
@@ -101,7 +101,7 @@ export function AdminDecryptResults({ requestId, onBack }: AdminDecryptResultsPr
   }, [requestData, requestId]);
 
   // Helper function to decrypt bytes back to string
-  const decryptBytes = (encryptedData: any): string => {
+  const decryptBytes = (encryptedData: Uint8Array | string | unknown): string => {
     try {
       // Handle different data formats
       let bytes: Uint8Array;

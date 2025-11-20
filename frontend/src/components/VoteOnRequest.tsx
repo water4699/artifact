@@ -27,7 +27,7 @@ interface RequestDetails extends TransferRequest {
 
 export function VoteOnRequest({ requestId, onBack }: VoteOnRequestProps) {
   const { isConnected, address } = useAccount();
-  const { submitEncryptedVote, fhevmReady, fhevmError, isEncrypting } = useVotingWithFHE();
+  const { fhevmReady, fhevmError, isEncrypting } = useVotingWithFHE();
   const { simpleVote } = useArtifactVoting();
   const [vote, setVote] = useState<'yes' | 'no' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
