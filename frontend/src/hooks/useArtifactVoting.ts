@@ -32,8 +32,8 @@ export function useArtifactVoting() {
   const { writeContractAsync } = useWriteContract();
 
   const createTransferRequest = useCallback(async (
-    artifactName: string,
-    description: string,
+    artifactName: `0x${string}`,
+    description: `0x${string}`,
     authorizedVoters: readonly `0x${string}`[]
   ) => {
     if (!address) throw new Error('Wallet not connected');
