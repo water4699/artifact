@@ -44,19 +44,27 @@ export function TransferRequestList({ onVoteRequest, onDecryptRequest, refreshTr
       }
 
       // Handle allRequestIds - it might be a Result object from ethers
-      let requestIds: any[] = [];
+      let requestIds: any = allRequestIds;
 
-      if (allRequestIds) {
-        // Handle ethers Result object
-        if (Array.isArray(allRequestIds)) {
-          requestIds = allRequestIds;
-        } else if (allRequestIds.length !== undefined) {
-          // It's a Result object, convert to array
-          requestIds = Array.from(allRequestIds);
-        } else {
-          console.error('Unexpected allRequestIds format:', allRequestIds);
-          requestIds = [];
+      if (!allRequestIds) {
+        console.log('allRequestIds is null/undefined');
+        setRequests([]);
+        setLoading(false);
+        return;
+      }
+
+      // Convert ethers Result object to array if needed
+      if (!Array.isArray(allRequestIds) && typeof allRequestIds === 'object' && allRequestIds !== null) {
+        try {
+          // It's likely a Result object, convert to array
+          requestIds = Array.from(allRequestIds as any);
+        } catch {
+          console.error('Failed to convert allRequestIds to array:', allRequestIds);
+          setRequests([]);
+          setLoading(false);
+          return;
         }
+      }
       }
 
       // If still no requestIds, try manual call
@@ -117,7 +125,9 @@ export function TransferRequestList({ onVoteRequest, onDecryptRequest, refreshTr
       try {
         if (Array.isArray(requestIds)) {
           iterableIds = requestIds;
-        } else if (requestIds.length !== undefined && typeof requestIds[Symbol.iterator] === 'function') {
+        } else if (typeof requestIds === 'object' && requestIds !== null &&
+                   'length' in requestIds && requestIds.length !== undefined &&
+                   typeof requestIds[Symbol.iterator] === 'function') {
           // It's iterable, convert to array
           iterableIds = Array.from(requestIds);
         } else {
