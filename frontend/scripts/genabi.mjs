@@ -4,10 +4,10 @@ import * as path from "path";
 
 const CONTRACT_NAME = "EncryptedArtifactVoting";
 
-// <root>/packages/fhevm-hardhat-template
+// <root>/artifact-cipher (parent directory)
 const rel = "..";
 
-// <root>/packages/site/components
+// <root>/artifact-cipher/frontend/abi
 const outdir = path.resolve("./abi");
 
 if (!fs.existsSync(outdir)) {
@@ -22,7 +22,7 @@ const line =
 
 if (!fs.existsSync(dir)) {
   console.error(
-    `${line}Unable to locate ${rel}. Expecting <root>/packages/${dirname}${line}`
+    `${line}Unable to locate ${rel}. Expecting artifact-cipher root directory${line}`
   );
   process.exit(1);
 }
@@ -46,10 +46,9 @@ function deployOnHardhatNode() {
     return;
   }
   try {
-    execSync(`./deploy-hardhat-node.sh`, {
-      cwd: path.resolve("./scripts"),
-      stdio: "inherit",
-    });
+    // Skip hardhat node deployment during build - use existing deployments
+    console.log("Skipping Hardhat node deployment during build process...");
+    return;
   } catch (e) {
     console.error(`${line}Script execution failed: ${e}${line}`);
     process.exit(1);
