@@ -174,6 +174,11 @@ export function AdminDecryptResults({ requestId, onBack }: AdminDecryptResultsPr
       const { ethers } = await import('ethers');
       const provider = new ethers.BrowserProvider(window.ethereum!);
       const receipt = await provider.waitForTransaction(txHash);
+
+      if (!receipt) {
+        throw new Error('Transaction receipt not found');
+      }
+
       console.log('Transaction confirmed in block:', receipt.blockNumber);
 
       // 解析事件日志获取解密结果
